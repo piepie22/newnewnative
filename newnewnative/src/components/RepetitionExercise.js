@@ -29,7 +29,6 @@ const RepetitionExercise = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Suggested: {suggestedExercise.name}</Text>
           </TouchableOpacity>
         )}
-
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
           <Text style={styles.buttonText}>Home</Text>
         </TouchableOpacity>
