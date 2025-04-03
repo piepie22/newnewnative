@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
 
 //mixing from module vids and code I have from previous lab
 const DurationExercise = ({ route, navigation }) => {
@@ -26,52 +27,53 @@ const DurationExercise = ({ route, navigation }) => {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(2, '0')}`;
   };
 
-  ///buttons - using touchableopacity
+  //buttons
   return (
     <View style={styles.container}>
       <Text style={styles.exerciseName}>{exercise.name}</Text>
       <Text style={styles.timer}>{formatTime(time)}</Text>
-
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.startButton]}
-          onPress={() => setIsRunning(true)}
-        >
-          <Text style={styles.buttonText}>Start</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.stopButton]}
-          onPress={() => setIsRunning(false)}
-        >
-          <Text style={styles.buttonText}>Stop</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.resetButton]}
+        <Button
+          title="Start"
+          buttonStyle={[styles.button, styles.startButton]}
+          titleStyle={styles.buttonText}
+          onPress={() => setIsRunning(true)}/>
+        <Button
+          title="Stop"
+          buttonStyle={[styles.button, styles.stopButton]}
+          titleStyle={styles.buttonText}
+          onPress={() => setIsRunning(false)}/>
+        <Button
+          title="Reset"
+          buttonStyle={[styles.button, styles.resetButton]}
+          titleStyle={styles.buttonText}
           onPress={() => {
             setIsRunning(false);
-            setTime(0);
-          }}>
-          <Text style={styles.buttonText}>Reset</Text>
-        </TouchableOpacity>
+            setTime(0);}}/>
       </View>
+
       <View style={styles.navigationButtons}>
-        {suggestedExercise && (<TouchableOpacity style={styles.button}
-            onPress={() => { navigation.navigate( suggestedExercise.type === 'duration' ? 'DurationExercise' : 'RepetitionExercise',
-                { exercise: suggestedExercise,
-                  suggestedExercise: exercises.find(ex => ex.id === suggestedExercise.suggestedId),
-                  exercises: exercises,});}}>
-            <Text style={styles.buttonText}>Suggested: {suggestedExercise.name}</Text>
-          </TouchableOpacity>
+        {suggestedExercise && (
+          <Button
+            title={`Suggested: ${suggestedExercise.name}`}
+            buttonStyle={styles.button}
+            titleStyle={styles.buttonText}
+            onPress={() => { navigation.navigate( suggestedExercise.type === 'Duration' ? 'DurationExercise' : 'RepetitionExercise',
+                {exercise: suggestedExercise, suggestedExercise: exercises.find(ex => ex.id === suggestedExercise.suggestedId),
+                  exercises: exercises, });}}/>
         )}
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-          <Text style={styles.buttonText}>Home</Text>
-        </TouchableOpacity>
+        <Button
+          title="Home"
+          buttonStyle={styles.button}
+          titleStyle={styles.buttonText}
+          onPress={() => navigation.navigate('Home')}
+        />
       </View>
     </View>
   );
 };
 
-//css like my previous one
+// css like my previous one
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -94,8 +96,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    gap: 10,
+    justifyContent: 'center',
+    width: '100%',
     marginVertical: 20,
+    gap: 10,
   },
   navigationButtons: {
     marginTop: 20,
@@ -110,7 +114,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginVertical: 5,
     width: 200,
-    alignItems: 'center',
   },
   startButton: {
     backgroundColor: '#00A36C',
